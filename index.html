@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Food Memory Game</title>
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="DESCRIPTION GOES HERE" />
+        <meta name="author" content="Alonso del Arte" />
+              <style type="text/css"><!--
+            td { font-size: 72pt; text-align: right; padding: 0; border: 1px solid black }
+            code { font-size: 8pt }
+            code:hover { font-size: inherit }
+                  span.tempHide, span.tempQHide, span.cardBack { display: none }
+                  span.cardBack:after { content: '?' }
+        //--></style>
+        <script type="application/javascript"><!-- 
+                    
+            function chooseFoodEmoji() {
+                const codePoint = 127789 + Math.floor(Math.random() * 83);
+                return String.fromCodePoint(codePoint)
+            }
+            
+            function flip() {
+                console.log(this.className);
+                this.className = "cardFaceUp";
+                console.log(this.className);
+            }
+            
+            function populate(height, width) {
+                const cardTable = document.getElementsByTagName("tbody").item(0);
+                for (r = 0; r < height; r++) {
+                    const row = cardTable.insertRow(-1);
+                    for (c = 0; c < width; c++) {
+                        const cell = row.insertCell(c);
+                        cell.innerHTML = "<span class='card' onclick='flip();'>" 
+                            + chooseFoodEmoji() + "</span>";
+                    }
+                }
+            }
+            
+        //--></script>
+    </head>
+    <body onload="populate(5, 6);">
+        <h1>Food Memory Game</h1>
+        <table>
+            <tbody></tbody>
+        </table>
+    </body>
+</html>
