@@ -15,10 +15,32 @@
                   span.cardBack:after { content: '?' }
         //--></style>
         <script type="application/javascript"><!-- 
+                
+                var total, half;
+            
+            var originalsSoFar = 0;
+            
+            var duplicatesSoFar = 0;
                     
-            function chooseFoodEmoji() {
+            function chooseFoodEmojiU1F300() {
                 const codePoint = 127789 + Math.floor(Math.random() * 83);
                 return String.fromCodePoint(codePoint)
+            }
+            
+            function chooseFoodEmojiU1F900() {
+                const propCodePoint = 129360 + Math.floor(Math.random() * 43);
+                const codePoint = (propCodePoint < 129392) ? propCodePoint 
+                        : propCodePoint + 80;
+                return String.fromCodePoint(codePoint)
+            }
+            
+            function chooseFoodEmoji() {
+                const randomNumber = Math.random();
+                if (randomNumber < 0.67) {
+                    return chooseFoodEmojiU1F300()
+                } else {
+                    return chooseFoodEmojiU1F900()
+                }
             }
             
             function flip() {
@@ -28,6 +50,8 @@
             }
             
             function populate(height, width) {
+                total = height * width;
+                half = total / 2;
                 const cardTable = document.getElementsByTagName("tbody").item(0);
                 for (r = 0; r < height; r++) {
                     const row = cardTable.insertRow(-1);
