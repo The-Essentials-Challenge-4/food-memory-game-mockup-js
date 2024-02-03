@@ -18,6 +18,8 @@
                 
                 var total, half;
             
+            const unmatchedItems = [];
+            
             var originalsSoFar = 0;
             
             var duplicatesSoFar = 0;
@@ -34,13 +36,40 @@
                 return String.fromCodePoint(codePoint)
             }
             
-            function chooseFoodEmoji() {
+            function chooseFoodEmojiFirstOfPair() {
                 const randomNumber = Math.random();
                 if (randomNumber < 0.67) {
                     return chooseFoodEmojiU1F300()
                 } else {
                     return chooseFoodEmojiU1F900()
                 }
+            }
+            
+            function decideIfMatched() {
+                if (unmatchedItems.length == 0) return false;
+                if (originalsSoFar == half) return true;
+                const randomNumber = Math.random();
+                if (randomNumber >= 0.5) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            
+            function chooseFoodEmoji() {
+                var chooseMatched = decideIfMatched();
+                var choice;
+                if (chooseMatched) {
+                    const index = Math.floor(Math.random() 
+                                             * unmatchedItems.length);
+                    choice = unmatchedItems[index];
+                    unmatchedItems.splice(index, 1)
+                } else {
+                    choice = chooseFoodEmojiFirstOfPair();
+                    unmatchedItems.push(choice);
+                    originalsSoFar++
+                }
+                return choice
             }
             
             function flip() {
